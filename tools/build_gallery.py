@@ -65,11 +65,12 @@ page = f'''<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Motion Model Bench</title>
 <style>
-:root{{--bg:#070b1a;--panel:#0e1530;--line:#1f2a52;--text:#e8ecff;--muted:#8d97c2;--opus:#f0a27a;--sonnet:#9fb3ff;--haiku:#8fe3c0;--fable:#e6c46b}}
-@media (prefers-color-scheme: light){{:root:not([data-theme="dark"]){{--bg:#f5f7ff;--panel:#fff;--line:#dfe4f5;--text:#101633;--muted:#58607f}}}}
+:root{{--bg:#070b1a;--panel:#0e1530;--line:#1f2a52;--text:#e8ecff;--muted:#8d97c2;--opus:#f0a27a;--sonnet:#9fb3ff;--haiku:#8fe3c0;--fable:#e6c46b;--link:#9fb3ff}}
+@media (prefers-color-scheme: light){{:root:not([data-theme="dark"]){{--bg:#f5f7ff;--panel:#fff;--line:#dfe4f5;--text:#101633;--muted:#58607f;--link:#2f45c8}}}}
+:root[data-theme="light"]{{--bg:#f5f7ff;--panel:#fff;--line:#dfe4f5;--text:#101633;--muted:#58607f;--link:#2f45c8}}
 *{{box-sizing:border-box}}body{{margin:0;background:radial-gradient(1200px 500px at 50% -10%,#1b2d7a55,transparent),var(--bg);color:var(--text);font:15px/1.5 ui-sans-serif,system-ui,-apple-system,"Segoe UI",Inter,sans-serif}}
 main{{max-width:1240px;margin:0 auto;padding:48px 16px 80px}}
-h1{{font-size:clamp(32px,6vw,56px);letter-spacing:-.03em;margin:0 0 8px}}h1 em{{font-style:normal;color:var(--sonnet)}}
+h1{{font-size:clamp(32px,6vw,56px);letter-spacing:-.03em;margin:0 0 8px}}h1 em{{font-style:normal;color:var(--link)}}
 .lede{{color:var(--muted);max-width:760px}}.totals{{margin:18px 0 8px;color:var(--muted);font-variant-numeric:tabular-nums}}
 .test{{margin-top:56px;border-top:1px solid var(--line);padding-top:28px}}.eyebrow{{font:600 12px/1 ui-monospace,monospace;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin:0}}
 h2{{margin:6px 0 10px;font-size:28px;letter-spacing:-.02em}}
@@ -83,14 +84,14 @@ details{{margin-bottom:18px}}summary{{cursor:pointer;color:var(--muted);font-siz
 .chip.opus-5-5{{background:var(--opus);color:#2a1206}}.chip.sonnet-5-5{{background:var(--sonnet);color:#0b1640}}.chip.haiku-4-5{{background:var(--haiku);color:#062a1c}}.chip.fable-5-1{{background:var(--fable);color:#2a2006}}
 .stats{{text-align:right;font-variant-numeric:tabular-nums}}.stats b{{display:block;font-size:24px;letter-spacing:-.02em}}.stats span{{color:var(--muted);font-size:13px}}
 .note{{margin:6px 16px 0;color:var(--muted);font-size:14px}}
-.links{{display:flex;gap:16px;padding:12px 16px 16px;margin-top:auto}}.links a{{color:var(--sonnet);text-decoration:none;font-size:14px}}.links a:hover{{text-decoration:underline}}
+.links{{display:flex;gap:16px;padding:12px 16px 16px;margin-top:auto}}.links a{{color:var(--link);text-decoration:none;font-size:14px}}.links a:hover{{text-decoration:underline}}
 footer{{margin-top:64px;color:var(--muted);font-size:13px}}
 </style></head><body><main>
 <h1>Motion <em>Model Bench</em></h1>
 <p class="lede">Same prompts, different Claude models, each run as a Claude Code subagent. Every piece is one self-contained HTML file driven by <code>window.seek(seconds)</code>; the MP4s are rendered by seeking frame-by-frame in headless Chromium and encoding with ffmpeg. Click a video for the live HTML. Hover or tap to play.</p>
 <p class="totals">{total_html}</p>
 {"".join(rows)}
-<footer>Costs are API list-price estimates computed from Claude Code transcripts by <code>tools/session_cost.py</code> (±25%: output tokens are estimated). Inspired by Charlie Hills' Opus 5.5 motion graphics test.</footer>
+<footer>Costs are API list-price estimates computed from Claude Code transcripts by <code>tools/session_cost.py</code> (±25%: output tokens are estimated). Minutes are wall-clock and include MP4 rendering (Opus Test 2 spent ~23 of its 32 min rendering 1,335 frames). Inspired by Charlie Hills' Opus 5.5 motion graphics test.</footer>
 </main>
 <script>
 document.querySelectorAll('.media video').forEach(v=>{{

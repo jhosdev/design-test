@@ -1,0 +1,66 @@
+{
+  "opus-5-5/test1-showreel": {
+    "model_id": "claude-opus-5-5",
+    "cost_usd": 1.57,
+    "minutes": 14.2,
+    "turns": 18,
+    "tool_calls": 31,
+    "note": "Seven scenes on a 120 BPM grid; particles form MOTION, ends MOTION \u2192 EMOTION \u2192 dot."
+  },
+  "opus-5-5/test2-explainer": {
+    "model_id": "claude-opus-5-5",
+    "cost_usd": 2.51,
+    "minutes": 31.8,
+    "turns": 26,
+    "tool_calls": 27,
+    "note": "44.5s night-sky film, four cited theories, closes on \u201cNo one knows for sure \u2014 yet.\u201d"
+  },
+  "opus-5-5/test3-chart": {
+    "model_id": "claude-opus-5-5",
+    "cost_usd": 1.12,
+    "minutes": 6.9,
+    "turns": 21,
+    "tool_calls": 27,
+    "note": "Monotone curve through the bar tops, amber \u201cSAT \u00b7 LATEST\u201d tag; loop is byte-identical."
+  },
+  "opus-5-5/test4-app": {
+    "model_id": "claude-opus-5-5",
+    "cost_usd": 1.52,
+    "minutes": 8.2,
+    "turns": 23,
+    "tool_calls": 26,
+    "note": "Light board \u2192 Campaign HQ; cursor-driven, title arcs into breadcrumb."
+  },
+  "sonnet-5-5/test1-showreel": {
+    "model_id": "claude-sonnet-5-5",
+    "cost_usd": 0.5,
+    "minutes": 7.0,
+    "turns": 11,
+    "tool_calls": 17,
+    "note": "Six scenes, word-per-beat typography, 3D tunnel + Fibonacci sphere."
+  },
+  "sonnet-5-5/test2-explainer": {
+    "model_id": "claude-sonnet-5-5",
+    "cost_usd": 0.74,
+    "minutes": 8.2,
+    "turns": 14,
+    "tool_calls": 24,
+    "note": "42s film, text/illustration split, same four theories, hedged."
+  },
+  "sonnet-5-5/test3-chart": {
+    "model_id": "claude-sonnet-5-5",
+    "cost_usd": 0.58,
+    "minutes": 4.6,
+    "turns": 17,
+    "tool_calls": 23,
+    "note": "Straight-segment line, mint Sat highlight, Bars/Line toggle."
+  },
+  "sonnet-5-5/test4-app": {
+    "model_id": "claude-sonnet-5-5",
+    "cost_usd": 0.66,
+    "minutes": 6.5,
+    "turns": 13,
+    "tool_calls": 21,
+    "note": "Dark Linear-style UI; ticks a checklist item mid-hold (62\u219275%)."
+  }
+}
