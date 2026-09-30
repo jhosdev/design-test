@@ -40,7 +40,7 @@ def card(model, test):
     return f'''<article class="run">
   <a class="media" href="{rel}/effect.html" aria-label="Open live {e(LABELS.get(model, model))} version">{media}</a>
   <div class="meta"><span class="chip {model}">{e(LABELS.get(model, model))}</span>{stats}</div>{note}
-  <div class="links"><a href="{rel}/effect.html">Live HTML ↗</a><a href="{rel}/effect.mp4" download>MP4</a></div>
+  <div class="links"><a href="{rel}/effect.html">Live HTML ↗</a><a href="{rel}/effect.mp4">MP4 ↗</a></div>
 </article>'''
 
 
