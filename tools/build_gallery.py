@@ -53,6 +53,23 @@ for i, (slug, title, prompt) in enumerate(TESTS, 1):
   <div class="grid">{cards}</div>
 </section>''')
 
+studio_cards = ""
+sp = os.path.join(ROOT, "studio", "results.json")
+if os.path.exists(sp):
+    for it in json.load(open(sp)):
+        rel = f"studio/{it['slug']}"
+        studio_cards += f'''<article class="run">
+  <a class="media" href="{rel}/effect.html" aria-label="Open live {e(it['title'])}"><video src="{rel}/effect.mp4" poster="{rel}/poster.png" muted loop playsinline preload="none"></video></a>
+  <div class="meta"><span class="chip opus-5-5">Opus 5.5</span><div class="stats"><b>${it['cost_usd']:.2f}</b><span>{it['minutes']:.1f} min · {it['turns']} turns</span></div></div>
+  <h3>{e(it['title'])}</h3><p class="note">{e(it['note'])}</p>
+  <div class="links"><a href="{rel}/effect.html">Live HTML ↗</a><a href="{rel}/effect.mp4">MP4 ↗</a></div>
+</article>'''
+studio_html = f'''<section class="test" id="studio">
+  <header><p class="eyebrow">Studio</p><h2>AI explainers</h2></header>
+  <p class="lede">Follow-ups on the benchmark: the showreel prompt plus a topic, two long explainers you can present (Space, ← →), and a direct test of plain HTML versus the HyperFrames skills on the same prompt.</p>
+  <div class="grid two">{studio_cards}</div>
+</section>''' if studio_cards else ""
+
 totals = {}
 for key, r in results.items():
     m = key.split("/")[0]
@@ -76,6 +93,7 @@ h1{{font-size:clamp(32px,6vw,56px);letter-spacing:-.03em;margin:0 0 8px}}h1 em{{
 h2{{margin:6px 0 10px;font-size:28px;letter-spacing:-.02em}}
 details{{margin-bottom:18px}}summary{{cursor:pointer;color:var(--muted);font-size:13px}}pre{{white-space:pre-wrap;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px;font:13px/1.6 ui-monospace,monospace;color:var(--text)}}
 .grid{{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:18px}}
+.grid.two{{grid-template-columns:repeat(auto-fit,minmax(min(100%,460px),1fr))}}
 .run{{background:var(--panel);border:1px solid var(--line);border-radius:16px;overflow:hidden;display:flex;flex-direction:column}}
 .run.empty{{padding:18px;color:var(--muted);justify-content:center;min-height:160px}}
 .media{{display:block;aspect-ratio:16/9;background:#000}}.media video,.media img{{width:100%;height:100%;object-fit:cover;display:block}}
@@ -83,6 +101,7 @@ details{{margin-bottom:18px}}summary{{cursor:pointer;color:var(--muted);font-siz
 .chip{{font:600 12px/1 ui-monospace,monospace;letter-spacing:.12em;text-transform:uppercase;padding:7px 10px;border-radius:999px;background:var(--line);color:var(--text)}}
 .chip.opus-5-5{{background:var(--opus);color:#2a1206}}.chip.sonnet-5-5{{background:var(--sonnet);color:#0b1640}}.chip.haiku-4-5{{background:var(--haiku);color:#062a1c}}.chip.fable-5-1{{background:var(--fable);color:#2a2006}}
 .stats{{text-align:right;font-variant-numeric:tabular-nums}}.stats b{{display:block;font-size:24px;letter-spacing:-.02em}}.stats span{{color:var(--muted);font-size:13px}}
+.run h3{{margin:10px 16px 0;font-size:18px;letter-spacing:-.01em}}
 .note{{margin:6px 16px 0;color:var(--muted);font-size:14px}}
 .links{{display:flex;gap:16px;padding:12px 16px 16px;margin-top:auto}}.links a{{color:var(--link);text-decoration:none;font-size:14px}}.links a:hover{{text-decoration:underline}}
 footer{{margin-top:64px;color:var(--muted);font-size:13px}}
@@ -90,6 +109,7 @@ footer{{margin-top:64px;color:var(--muted);font-size:13px}}
 <h1>Motion <em>Model Bench</em></h1>
 <p class="lede">Same prompts, different Claude models, each run as a Claude Code subagent. Every piece is one self-contained HTML file driven by <code>window.seek(seconds)</code>; the MP4s are rendered by seeking frame-by-frame in headless Chromium and encoding with ffmpeg. Click a video for the live HTML. Hover or tap to play.</p>
 <p class="totals">{total_html}</p>
+{studio_html}
 {"".join(rows)}
 <footer>Costs are API list-price estimates computed from Claude Code transcripts by <code>tools/session_cost.py</code> (±25%: output tokens are estimated). Minutes are wall-clock and include MP4 rendering (Opus Test 2 spent ~23 of its 32 min rendering 1,335 frames). Inspired by Charlie Hills' Opus 5.5 motion graphics test.</footer>
 </main>
