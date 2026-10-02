@@ -34,3 +34,6 @@ The costs come from Claude Code transcripts. Input and cache token counts are ex
 1. Run the prompts in `tools/build_gallery.py` with a subagent on the new model, writing to `runs/<model>/<test>/`.
 2. Add its transcript numbers to `runs/results.json`.
 3. Run `python3 tools/build_gallery.py`.
+
+## Cloud environment
+`env/setup.sh` is a setup script for Claude Code cloud environments. Paste it into the environment's settings under **Setup script**. It takes about 25 seconds, and the environment cache keeps the result. It installs fnm, cloudflared, wrangler, hyperframes, a Playwright version that matches the preinstalled Chromium, serve, ruff and httpie. Node, bun, uv, Python, Rust, Go, Docker, ffmpeg and gh come with the base image.
