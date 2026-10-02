@@ -1,0 +1,38 @@
+[
+  {
+    "slug": "neural-net-showreel",
+    "title": "Neural net showreel",
+    "note": "Showreel prompt + topic. Plain HTML/Canvas, no skills. Real 4\u21926\u21926\u21923 MLP trained on iris in-page; every number on screen is computed.",
+    "model_id": "claude-opus-5-5",
+    "cost_usd": 2.36,
+    "minutes": 14.9,
+    "turns": 29
+  },
+  {
+    "slug": "neural-net-hyperframes",
+    "title": "Neural net \u00b7 HyperFrames + skills",
+    "note": "Same prompt, built with the HyperFrames skills, GSAP timeline and CLI render; passes hyperframes check (lint, layout, WCAG contrast).",
+    "model_id": "claude-opus-5-5",
+    "cost_usd": 3.36,
+    "minutes": 19.0,
+    "turns": 41
+  },
+  {
+    "slug": "micrograd-backprop",
+    "title": "Backpropagation, spelled out",
+    "note": "96s micrograd explainer: a JS port of Value/_backward computes every value. Space / \u2190 \u2192 to present.",
+    "model_id": "claude-opus-5-5",
+    "cost_usd": 2.69,
+    "minutes": 16.3,
+    "turns": 32
+  },
+  {
+    "slug": "agents-workflow",
+    "title": "How I build with agents",
+    "note": "78s explainer using this repo as the case study: harness loop, auto mode, subagents, eval loop, costs. Space / \u2190 \u2192 to present.",
+    "model_id": "claude-opus-5-5",
+    "cost_usd": 2.61,
+    "minutes": 19.1,
+    "turns": 37
+  }
+]

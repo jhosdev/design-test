@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Motion Model Bench</title>
+<style>
+:root{--bg:#070b1a;--panel:#0e1530;--line:#1f2a52;--text:#e8ecff;--muted:#8d97c2;--opus:#f0a27a;--sonnet:#9fb3ff;--haiku:#8fe3c0;--fable:#e6c46b;--link:#9fb3ff}
+@media (prefers-color-scheme: light){:root:not([data-theme="dark"]){--bg:#f5f7ff;--panel:#fff;--line:#dfe4f5;--text:#101633;--muted:#58607f;--link:#2f45c8}}
+:root[data-theme="light"]{--bg:#f5f7ff;--panel:#fff;--line:#dfe4f5;--text:#101633;--muted:#58607f;--link:#2f45c8}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(1200px 500px at 50% -10%,#1b2d7a55,transparent),var(--bg);color:var(--text);font:15px/1.5 ui-sans-serif,system-ui,-apple-system,"Segoe UI",Inter,sans-serif}
+main{max-width:1240px;margin:0 auto;padding:48px 16px 80px}
+h1{font-size:clamp(32px,6vw,56px);letter-spacing:-.03em;margin:0 0 8px}h1 em{font-style:normal;color:var(--link)}
+.lede{color:var(--muted);max-width:760px}.totals{margin:18px 0 8px;color:var(--muted);font-variant-numeric:tabular-nums}
+.test{margin-top:56px;border-top:1px solid var(--line);padding-top:28px}.eyebrow{font:600 12px/1 ui-monospace,monospace;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin:0}
+h2{margin:6px 0 10px;font-size:28px;letter-spacing:-.02em}
+details{margin-bottom:18px}summary{cursor:pointer;color:var(--muted);font-size:13px}pre{white-space:pre-wrap;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px;font:13px/1.6 ui-monospace,monospace;color:var(--text)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:18px}
+.grid.two{grid-template-columns:repeat(auto-fit,minmax(min(100%,460px),1fr))}
+.run{background:var(--panel);border:1px solid var(--line);border-radius:16px;overflow:hidden;display:flex;flex-direction:column}
+.run.empty{padding:18px;color:var(--muted);justify-content:center;min-height:160px}
+.media{display:block;aspect-ratio:16/9;background:#000}.media video,.media img{width:100%;height:100%;object-fit:cover;display:block}
+.meta{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 16px 4px}
+.chip{font:600 12px/1 ui-monospace,monospace;letter-spacing:.12em;text-transform:uppercase;padding:7px 10px;border-radius:999px;background:var(--line);color:var(--text)}
+.chip.opus-5-5{background:var(--opus);color:#2a1206}.chip.sonnet-5-5{background:var(--sonnet);color:#0b1640}.chip.haiku-4-5{background:var(--haiku);color:#062a1c}.chip.fable-5-1{background:var(--fable);color:#2a2006}
+.stats{text-align:right;font-variant-numeric:tabular-nums}.stats b{display:block;font-size:24px;letter-spacing:-.02em}.stats span{color:var(--muted);font-size:13px}
+.run h3{margin:10px 16px 0;font-size:18px;letter-spacing:-.01em}
+.note{margin:6px 16px 0;color:var(--muted);font-size:14px}
+.links{display:flex;gap:16px;padding:12px 16px 16px;margin-top:auto}.links a{color:var(--link);text-decoration:none;font-size:14px}.links a:hover{text-decoration:underline}
+footer{margin-top:64px;color:var(--muted);font-size:13px}
+</style></head><body><main>
+<h1>Motion <em>Model Bench</em></h1>
+<p class="lede">Same prompts, different Claude models, each run as a Claude Code subagent. Every piece is one self-contained HTML file driven by <code>window.seek(seconds)</code>; the MP4s are rendered by seeking frame-by-frame in headless Chromium and encoding with ffmpeg. Click a video for the live HTML. Hover or tap to play.</p>
+<p class="totals"><span class="chip opus-5-5">Opus 5.5</span> $6.72 · 61 min &nbsp; <span class="chip sonnet-5-5">Sonnet 5.5</span> $2.48 · 26 min &nbsp;</p>
+<section class="test" id="studio">
+  <header><p class="eyebrow">Studio</p><h2>AI explainers</h2></header>
+  <p class="lede">Follow-ups on the benchmark: the showreel prompt plus a topic, two long explainers you can present (Space, ← →), and a direct test of plain HTML versus the HyperFrames skills on the same prompt.</p>
+  <div class="grid two"><article class="run">
+  <a class="media" href="studio/neural-net-showreel/effect.html" aria-label="Open live Neural net showreel"><video src="studio/neural-net-showreel/effect.mp4" poster="studio/neural-net-showreel/poster.png" muted loop playsinline preload="none"></video></a>
+  <div class="meta"><span class="chip opus-5-5">Opus 5.5</span><div class="stats"><b>$2.36</b><span>14.9 min · 29 turns</span></div></div>
+  <h3>Neural net showreel</h3><p class="note">Showreel prompt + topic. Plain HTML/Canvas, no skills. Real 4→6→6→3 MLP trained on iris in-page; every number on screen is computed.</p>
+  <div class="links"><a href="studio/neural-net-showreel/effect.html">Live HTML ↗</a><a href="studio/neural-net-showreel/effect.mp4">MP4 ↗</a></div>
+</article><article class="run">
+  <a class="media" href="studio/neural-net-hyperframes/effect.html" aria-label="Open live Neural net · HyperFrames + skills"><video src="studio/neural-net-hyperframes/effect.mp4" poster="studio/neural-net-hyperframes/poster.png" muted loop playsinline preload="none"></video></a>
+  <div class="meta"><span class="chip opus-5-5">Opus 5.5</span><div class="stats"><b>$3.36</b><span>19.0 min · 41 turns</span></div></div>
+  <h3>Neural net · HyperFrames + skills</h3><p class="note">Same prompt, built with the HyperFrames skills, GSAP timeline and CLI render; passes hyperframes check (lint, layout, WCAG contrast).</p>
+  <div class="links"><a href="studio/neural-net-hyperframes/effect.html">Live HTML ↗</a><a href="studio/neural-net-hyperframes/effect.mp4">MP4 ↗</a></div>
+</article><article class="run">
+  <a class="media" href="studio/micrograd-backprop/effect.html" aria-label="Open live Backpropagation, spelled out"><video src="studio/micrograd-backprop/effect.mp4" poster="studio/micrograd-backprop/poster.png" muted loop playsinline preload="none"></video></a>
+  <div class="meta"><span class="chip opus-5-5">Opus 5.5</span><div class="stats"><b>$2.69</b><span>16.3 min · 32 turns</span></div></div>
+  <h3>Backpropagation, spelled out</h3><p class="note">96s micrograd explainer: a JS port of Value/_backward computes every value. Space / ← → to present.</p>
+  <div class="links"><a href="studio/micrograd-backprop/effect.html">Live HTML ↗</a><a href="studio/micrograd-backprop/effect.mp4">MP4 ↗</a></div>
+</article><article class="run">
+  <a class="media" href="studio/agents-workflow/effect.html" aria-label="Open live How I build with agents"><video src="studio/agents-workflow/effect.mp4" poster="studio/agents-workflow/poster.png" muted loop playsinline preload="none"></video></a>
+  <div class="meta"><span class="chip opus-5-5">Opus 5.5</span><div class="stats"><b>$2.61</b><span>19.1 min · 37 turns</span></div></div>
+  <h3>How I build with agents</h3><p class="note">78s explainer using this repo as the case study: harness loop, auto mode, subagents, eval loop, costs. Space / ← → to present.</p>
+  <div class="links"><a href="studio/agents-workflow/effect.html">Live HTML ↗</a><a href="studio/agents-workflow/effect.mp4">MP4 ↗</a></div>
+</article></div>
+</section>
+<section class="test">
+  <header><p class="eyebrow">Test 1</p><h2>Showreel</h2></header>
+  <details><summary>The prompt</summary><pre>Make a dynamic 15-second motion graphics video that shows what an incredible motion designer you are. Go all out.</pre></details>
+  <div class="grid"><article class="run">
+  <a class="media" href="runs/opus-5-5/test1-showreel/effect.html" aria-label="Open live Opus 5.5 version"><video src="runs/opus-5-5/test1-showreel/effect.mp4" poster="runs/opus-5-5/test1-showreel/poster.png" muted loop playsinline preload="none"></video></a>
+  <div class="meta"><span class="chip opus-5-5">Opus 5.5</span><div class="stats"><b>$1.57</b><span>14.2 min · 18 turns</span></div></div><p class="note">Seven scenes on a 120 BPM grid; particles form MOTION, ends MOTION → EMOTION → dot.</p>
+  <div class="links"><a href="runs/opus-5-5/test1-showreel/effect.html">Live HTML ↗</a><a href="runs/opus-5-5/test1-showreel/effect.mp4">MP4 ↗</a></div>
+</article>
+<article class="run">
+  <a class="media" href="runs/sonnet-5-5/test1-showreel/effect.html" aria-label="Open live Sonnet 5.5 version"><video src="runs/sonnet-5-5/test1-showreel/effect.mp4" poster="runs/sonnet-5-5/test1-showreel/poster.png" muted loop playsinline preload="none"></video></a>
+  <div class="meta"><span class="chip sonnet-5-5">Sonnet 5.5</span><div class="stats"><b>$0.50</b><span>7.0 min · 11 turns</span></div></div><p class="note">Six scenes, word-per-beat typography, 3D tunnel + Fibonacci sphere.</p>
+  <div class="links"><a href="runs/sonnet-5-5/test1-showreel/effect.html">Live HTML ↗</a><a href="runs/sonnet-5-5/test1-showreel/effect.mp4">MP4 ↗</a></div>
+</article></div>
+</section><section class="test">
+  <header><p class="eyebrow">Test 2</p><h2>Explainer film</h2></header>
+  <details><summary>The prompt</summary><pre>Why do we dream? Answer it as a short motion graphics film.</pre></details>
+  <div class="grid"><article class="run">
+  <a class="media" href="runs/opus-5-5/test2-explainer/effect.html" aria-label="Open live Opus 5.5 version"><video src="runs/opus-5-5/test2-explainer/effect.mp4" poster="runs/opus-5-5/test2-explainer/poster.png" muted loop playsinline preload="none"></video></a>
+  <div class="meta"><span class="chip opus-5-5">Opus 5.5</span><div class="stats"><b>$2.51</b><span>31.8 min · 26 turns</span></div></div><p class="note">44.5s night-sky film, four cited theories, closes on “No one knows for sure — yet.”</p>
+  <div class="links"><a href="runs/opus-5-5/test2-explainer/effect.html">Live HTML ↗</a><a href="runs/opus-5-5/test2-explainer/effect.mp4">MP4 ↗</a></div>
+</article>
+<article class="run">
+  <a class="media" href="runs/sonnet-5-5/test2-explainer/effect.html" aria-label="Open live Sonnet 5.5 version"><video src="runs/sonnet-5-5/test2-explainer/effect.mp4" poster="runs/sonnet-5-5/test2-explainer/poster.png" muted loop playsinline preload="none"></video></a>
+  <div class="meta"><span class="chip sonnet-5-5">Sonnet 5.5</span><div class="stats"><b>$0.74</b><span>8.2 min · 14 turns</span></div></div><p class="note">42s film, text/illustration split, same four theories, hedged.</p>
+  <div class="links"><a href="runs/sonnet-5-5/test2-explainer/effect.html">Live HTML ↗</a><a href="runs/sonnet-5-5/test2-explainer/effect.mp4">MP4 ↗</a></div>
+</article></div>
+</section><section class="test">
+  <header><p class="eyebrow">Test 3</p><h2>Chart animation</h2></header>
+  <details><summary>The prompt</summary><pre>Build effect.html from scratch: a bar chart titled Weekly reach with these values: Mon: 1,200, Tue: 1,800, Wed: 1,500, Thu: 2,400, Fri: 2,100, Sat: 3,200. The bars slim down and turn into a line through their own tops, and the last value gets a tag. Never change a value. One 8-second loop with window.seek(seconds), ending where it starts. Size: 1920 x 1080. Label sample numbers as examples.</pre></details>
+  <div class="grid"><article class="run">
+  <a class="media" href="runs/opus-5-5/test3-chart/effect.html" aria-label="Open live Opus 5.5 version"><video src="runs/opus-5-5/test3-chart/effect.mp4" poster="runs/opus-5-5/test3-chart/poster.png" muted loop playsinline preload="none"></video></a>
+  <div class="meta"><span class="chip opus-5-5">Opus 5.5</span><div class="stats"><b>$1.12</b><span>6.9 min · 21 turns</span></div></div><p class="note">Monotone curve through the bar tops, amber “SAT · LATEST” tag; loop is byte-identical.</p>
+  <div class="links"><a href="runs/opus-5-5/test3-chart/effect.html">Live HTML ↗</a><a href="runs/opus-5-5/test3-chart/effect.mp4">MP4 ↗</a></div>
+</article>
+<article class="run">
+  <a class="media" href="runs/sonnet-5-5/test3-chart/effect.html" aria-label="Open live Sonnet 5.5 version"><video src="runs/sonnet-5-5/test3-chart/effect.mp4" poster="runs/sonnet-5-5/test3-chart/poster.png" muted loop playsinline preload="none"></video></a>
+  <div class="meta"><span class="chip sonnet-5-5">Sonnet 5.5</span><div class="stats"><b>$0.58</b><span>4.6 min · 17 turns</span></div></div><p class="note">Straight-segment line, mint Sat highlight, Bars/Line toggle.</p>
+  <div class="links"><a href="runs/sonnet-5-5/test3-chart/effect.html">Live HTML ↗</a><a href="runs/sonnet-5-5/test3-chart/effect.mp4">MP4 ↗</a></div>
+</article></div>
+</section><section class="test">
+  <header><p class="eyebrow">Test 4</p><h2>App animation</h2></header>
+  <details><summary>The prompt</summary><pre>Build effect.html from scratch: a small card titled Q4 launch plan grows from its own corner into a full editor window called Campaign HQ, with a sidebar, a document and status chips. The card&#x27;s title travels into the window&#x27;s title bar. One 8-second loop with window.seek(seconds), ending where it starts. Size: 1920 x 1080. Embed the fonts.</pre></details>
+  <div class="grid"><article class="run">
+  <a class="media" href="runs/opus-5-5/test4-app/effect.html" aria-label="Open live Opus 5.5 version"><video src="runs/opus-5-5/test4-app/effect.mp4" poster="runs/opus-5-5/test4-app/poster.png" muted loop playsinline preload="none"></video></a>
+  <div class="meta"><span class="chip opus-5-5">Opus 5.5</span><div class="stats"><b>$1.52</b><span>8.2 min · 23 turns</span></div></div><p class="note">Light board → Campaign HQ; cursor-driven, title arcs into breadcrumb.</p>
+  <div class="links"><a href="runs/opus-5-5/test4-app/effect.html">Live HTML ↗</a><a href="runs/opus-5-5/test4-app/effect.mp4">MP4 ↗</a></div>
+</article>
+<article class="run">
+  <a class="media" href="runs/sonnet-5-5/test4-app/effect.html" aria-label="Open live Sonnet 5.5 version"><video src="runs/sonnet-5-5/test4-app/effect.mp4" poster="runs/sonnet-5-5/test4-app/poster.png" muted loop playsinline preload="none"></video></a>
+  <div class="meta"><span class="chip sonnet-5-5">Sonnet 5.5</span><div class="stats"><b>$0.66</b><span>6.5 min · 13 turns</span></div></div><p class="note">Dark Linear-style UI; ticks a checklist item mid-hold (62→75%).</p>
+  <div class="links"><a href="runs/sonnet-5-5/test4-app/effect.html">Live HTML ↗</a><a href="runs/sonnet-5-5/test4-app/effect.mp4">MP4 ↗</a></div>
+</article></div>
+</section>
+<footer>Costs are API list-price estimates computed from Claude Code transcripts by <code>tools/session_cost.py</code> (±25%: output tokens are estimated). Minutes are wall-clock and include MP4 rendering (Opus Test 2 spent ~23 of its 32 min rendering 1,335 frames). Inspired by Charlie Hills' Opus 5.5 motion graphics test.</footer>
+</main>
+<script>
+document.querySelectorAll('.media video').forEach(v=>{
+  const play=()=>{v.preload='auto';v.play().catch(()=>{})},stop=()=>v.pause();
+  v.parentElement.addEventListener('mouseenter',play);v.parentElement.addEventListener('mouseleave',stop);
+  new IntersectionObserver(es=>es.forEach(x=>x.isIntersecting&&matchMedia('(hover:none)').matches?play():stop()),{threshold:.6}).observe(v);
+});
+</script></body></html>
