@@ -16,7 +16,24 @@ details{margin-bottom:18px}summary{cursor:pointer;color:var(--muted);font-size:1
 .grid.two{grid-template-columns:repeat(auto-fit,minmax(min(100%,460px),1fr))}
 .run{background:var(--panel);border:1px solid var(--line);border-radius:16px;overflow:hidden;display:flex;flex-direction:column}
 .run.empty{padding:18px;color:var(--muted);justify-content:center;min-height:160px}
-.media{display:block;aspect-ratio:16/9;background:#000}.media video,.media img{width:100%;height:100%;object-fit:cover;display:block}
+.media{all:unset;box-sizing:border-box;position:relative;display:block;width:100%;aspect-ratio:16/9;background:#000;cursor:pointer;overflow:hidden}
+.media img,.media video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.media video{opacity:0;transition:opacity .25s}.media.on video{opacity:1}
+.media:focus-visible{outline:3px solid var(--link);outline-offset:-3px}
+.play{position:absolute;right:12px;bottom:12px;width:40px;height:40px;border-radius:50%;display:grid;place-items:center;background:#0009;color:#fff;font-size:14px;backdrop-filter:blur(6px);transition:transform .2s,opacity .2s}
+.media:hover .play{transform:scale(1.1)}.media.on .play{opacity:0}
+.links button{all:unset;cursor:pointer;color:var(--link);font-size:14px}.links button:hover{text-decoration:underline}
+dialog{width:min(1200px,calc(100vw - 32px));max-height:calc(100dvh - 32px);padding:0;border:1px solid var(--line);border-radius:18px;background:var(--panel);color:var(--text);overflow:auto}
+dialog::backdrop{background:#02040cd9;backdrop-filter:blur(4px)}
+dialog video{display:block;width:100%;aspect-ratio:16/9;background:#000}
+.vbar{display:flex;flex-wrap:wrap;align-items:center;gap:12px 16px;padding:14px 18px}
+.vbar h3{margin:0;font-size:20px;flex:1 1 240px}.vbar .stats{text-align:left}.vbar .stats b{display:inline;font-size:18px;margin-right:8px}
+.vbody{padding:0 18px 18px}.vbody .note{margin:0 0 10px}
+.vlinks{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.vlinks a,.vlinks button{all:unset;cursor:pointer;padding:8px 12px;border-radius:10px;border:1px solid var(--line);font-size:14px}
+.vlinks a.primary{background:var(--link);color:var(--bg);border-color:transparent;font-weight:600}
+.vlinks a:focus-visible,.vlinks button:focus-visible{outline:2px solid var(--link)}
+.vlinks .spacer{flex:1}@media (max-width:560px){.vlinks .spacer{flex-basis:100%;height:0}.vlinks a.primary{flex:1;text-align:center}}
 .meta{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 16px 4px}
 .chip{font:600 12px/1 ui-monospace,monospace;letter-spacing:.12em;text-transform:uppercase;padding:7px 10px;border-radius:999px;background:var(--line);color:var(--text)}
 .chip.opus-5-5{background:var(--opus);color:#2a1206}.chip.sonnet-5-5{background:var(--sonnet);color:#0b1640}.chip.haiku-4-5{background:var(--haiku);color:#062a1c}.chip.fable-5-1{background:var(--fable);color:#2a2006}
@@ -27,92 +44,143 @@ details{margin-bottom:18px}summary{cursor:pointer;color:var(--muted);font-size:1
 footer{margin-top:64px;color:var(--muted);font-size:13px}
 </style></head><body><main>
 <h1>Motion <em>Model Bench</em></h1>
-<p class="lede">Same prompts, different Claude models, each run as a Claude Code subagent. Every piece is one self-contained HTML file driven by <code>window.seek(seconds)</code>; the MP4s are rendered by seeking frame-by-frame in headless Chromium and encoding with ffmpeg. Click a video for the live HTML. Hover or tap to play.</p>
+<p class="lede">Same prompts, different Claude models, each run as a Claude Code subagent. Every piece is one self-contained HTML file driven by <code>window.seek(seconds)</code>; the MP4s are rendered by seeking frame-by-frame in headless Chromium and encoding with ffmpeg. Hover a card to preview, click to watch the full render, or open the live HTML.</p>
 <p class="totals"><span class="chip opus-5-5">Opus 5.5</span> $6.72 · 61 min &nbsp; <span class="chip sonnet-5-5">Sonnet 5.5</span> $2.48 · 26 min &nbsp;</p>
 <section class="test" id="studio">
   <header><p class="eyebrow">Studio</p><h2>AI explainers</h2></header>
   <p class="lede">Follow-ups on the benchmark: the showreel prompt plus a topic, two long explainers you can present (Space, ← →), and a direct test of plain HTML versus the HyperFrames skills on the same prompt.</p>
   <div class="grid two"><article class="run">
-  <a class="media" href="studio/neural-net-showreel/effect.html" aria-label="Open live Neural net showreel"><video src="studio/neural-net-showreel/effect.mp4" poster="studio/neural-net-showreel/poster.png" muted loop playsinline preload="none"></video></a>
-  <div class="meta"><span class="chip opus-5-5">Opus 5.5</span><div class="stats"><b>$2.36</b><span>14.9 min · 29 turns</span></div></div>
-  <h3>Neural net showreel</h3><p class="note">Showreel prompt + topic. Plain HTML/Canvas, no skills. Real 4→6→6→3 MLP trained on iris in-page; every number on screen is computed.</p>
-  <div class="links"><a href="studio/neural-net-showreel/effect.html">Live HTML ↗</a><a href="studio/neural-net-showreel/effect.mp4">MP4 ↗</a></div>
+  <button class="media" type="button" data-i="0" aria-label="Play Neural net showreel (Opus 5.5)">
+    <img src="studio/neural-net-showreel/thumb.webp" alt="" width="800" height="450" decoding="async" fetchpriority="high"><span class="play" aria-hidden="true">▶</span>
+  </button>
+  <div class="meta"><span class="chip opus-5-5">Opus 5.5</span><div class="stats"><b>$2.36</b><span>14.9 min · 29 turns</span></div></div><h3>Neural net showreel</h3><p class="note">Showreel prompt + topic. Plain HTML/Canvas, no skills. Real 4→6→6→3 MLP trained on iris in-page; every number on screen is computed.</p>
+  <div class="links"><button type="button" class="open" data-i="0">Watch</button><a href="studio/neural-net-showreel/effect.html" target="_blank" rel="noopener">Live HTML ↗</a></div>
 </article><article class="run">
-  <a class="media" href="studio/neural-net-hyperframes/effect.html" aria-label="Open live Neural net · HyperFrames + skills"><video src="studio/neural-net-hyperframes/effect.mp4" poster="studio/neural-net-hyperframes/poster.png" muted loop playsinline preload="none"></video></a>
-  <div class="meta"><span class="chip opus-5-5">Opus 5.5</span><div class="stats"><b>$3.36</b><span>19.0 min · 41 turns</span></div></div>
-  <h3>Neural net · HyperFrames + skills</h3><p class="note">Same prompt, built with the HyperFrames skills, GSAP timeline and CLI render; passes hyperframes check (lint, layout, WCAG contrast).</p>
-  <div class="links"><a href="studio/neural-net-hyperframes/effect.html">Live HTML ↗</a><a href="studio/neural-net-hyperframes/effect.mp4">MP4 ↗</a></div>
+  <button class="media" type="button" data-i="1" aria-label="Play Neural net · HyperFrames + skills (Opus 5.5)">
+    <img src="studio/neural-net-hyperframes/thumb.webp" alt="" width="800" height="450" decoding="async" fetchpriority="high"><span class="play" aria-hidden="true">▶</span>
+  </button>
+  <div class="meta"><span class="chip opus-5-5">Opus 5.5</span><div class="stats"><b>$3.36</b><span>19.0 min · 41 turns</span></div></div><h3>Neural net · HyperFrames + skills</h3><p class="note">Same prompt, built with the HyperFrames skills, GSAP timeline and CLI render; passes hyperframes check (lint, layout, WCAG contrast).</p>
+  <div class="links"><button type="button" class="open" data-i="1">Watch</button><a href="studio/neural-net-hyperframes/effect.html" target="_blank" rel="noopener">Live HTML ↗</a></div>
 </article><article class="run">
-  <a class="media" href="studio/micrograd-backprop/effect.html" aria-label="Open live Backpropagation, spelled out"><video src="studio/micrograd-backprop/effect.mp4" poster="studio/micrograd-backprop/poster.png" muted loop playsinline preload="none"></video></a>
-  <div class="meta"><span class="chip opus-5-5">Opus 5.5</span><div class="stats"><b>$2.69</b><span>16.3 min · 32 turns</span></div></div>
-  <h3>Backpropagation, spelled out</h3><p class="note">96s micrograd explainer: a JS port of Value/_backward computes every value. Space / ← → to present.</p>
-  <div class="links"><a href="studio/micrograd-backprop/effect.html">Live HTML ↗</a><a href="studio/micrograd-backprop/effect.mp4">MP4 ↗</a></div>
+  <button class="media" type="button" data-i="2" aria-label="Play Backpropagation, spelled out (Opus 5.5)">
+    <img src="studio/micrograd-backprop/thumb.webp" alt="" width="800" height="450" decoding="async" loading="lazy"><span class="play" aria-hidden="true">▶</span>
+  </button>
+  <div class="meta"><span class="chip opus-5-5">Opus 5.5</span><div class="stats"><b>$2.69</b><span>16.3 min · 32 turns</span></div></div><h3>Backpropagation, spelled out</h3><p class="note">96s micrograd explainer: a JS port of Value/_backward computes every value. Space / ← → to present.</p>
+  <div class="links"><button type="button" class="open" data-i="2">Watch</button><a href="studio/micrograd-backprop/effect.html" target="_blank" rel="noopener">Live HTML ↗</a></div>
 </article><article class="run">
-  <a class="media" href="studio/agents-workflow/effect.html" aria-label="Open live How I build with agents"><video src="studio/agents-workflow/effect.mp4" poster="studio/agents-workflow/poster.png" muted loop playsinline preload="none"></video></a>
-  <div class="meta"><span class="chip opus-5-5">Opus 5.5</span><div class="stats"><b>$2.61</b><span>19.1 min · 37 turns</span></div></div>
-  <h3>How I build with agents</h3><p class="note">78s explainer using this repo as the case study: harness loop, auto mode, subagents, eval loop, costs. Space / ← → to present.</p>
-  <div class="links"><a href="studio/agents-workflow/effect.html">Live HTML ↗</a><a href="studio/agents-workflow/effect.mp4">MP4 ↗</a></div>
+  <button class="media" type="button" data-i="3" aria-label="Play How I build with agents (Opus 5.5)">
+    <img src="studio/agents-workflow/thumb.webp" alt="" width="800" height="450" decoding="async" loading="lazy"><span class="play" aria-hidden="true">▶</span>
+  </button>
+  <div class="meta"><span class="chip opus-5-5">Opus 5.5</span><div class="stats"><b>$2.61</b><span>19.1 min · 37 turns</span></div></div><h3>How I build with agents</h3><p class="note">78s explainer using this repo as the case study: harness loop, auto mode, subagents, eval loop, costs. Space / ← → to present.</p>
+  <div class="links"><button type="button" class="open" data-i="3">Watch</button><a href="studio/agents-workflow/effect.html" target="_blank" rel="noopener">Live HTML ↗</a></div>
 </article></div>
 </section>
 <section class="test">
   <header><p class="eyebrow">Test 1</p><h2>Showreel</h2></header>
   <details><summary>The prompt</summary><pre>Make a dynamic 15-second motion graphics video that shows what an incredible motion designer you are. Go all out.</pre></details>
   <div class="grid"><article class="run">
-  <a class="media" href="runs/opus-5-5/test1-showreel/effect.html" aria-label="Open live Opus 5.5 version"><video src="runs/opus-5-5/test1-showreel/effect.mp4" poster="runs/opus-5-5/test1-showreel/poster.png" muted loop playsinline preload="none"></video></a>
+  <button class="media" type="button" data-i="4" aria-label="Play Showreel (Opus 5.5)">
+    <img src="runs/opus-5-5/test1-showreel/thumb.webp" alt="" width="800" height="450" decoding="async" loading="lazy"><span class="play" aria-hidden="true">▶</span>
+  </button>
   <div class="meta"><span class="chip opus-5-5">Opus 5.5</span><div class="stats"><b>$1.57</b><span>14.2 min · 18 turns</span></div></div><p class="note">Seven scenes on a 120 BPM grid; particles form MOTION, ends MOTION → EMOTION → dot.</p>
-  <div class="links"><a href="runs/opus-5-5/test1-showreel/effect.html">Live HTML ↗</a><a href="runs/opus-5-5/test1-showreel/effect.mp4">MP4 ↗</a></div>
+  <div class="links"><button type="button" class="open" data-i="4">Watch</button><a href="runs/opus-5-5/test1-showreel/effect.html" target="_blank" rel="noopener">Live HTML ↗</a></div>
 </article>
 <article class="run">
-  <a class="media" href="runs/sonnet-5-5/test1-showreel/effect.html" aria-label="Open live Sonnet 5.5 version"><video src="runs/sonnet-5-5/test1-showreel/effect.mp4" poster="runs/sonnet-5-5/test1-showreel/poster.png" muted loop playsinline preload="none"></video></a>
+  <button class="media" type="button" data-i="5" aria-label="Play Showreel (Sonnet 5.5)">
+    <img src="runs/sonnet-5-5/test1-showreel/thumb.webp" alt="" width="800" height="450" decoding="async" loading="lazy"><span class="play" aria-hidden="true">▶</span>
+  </button>
   <div class="meta"><span class="chip sonnet-5-5">Sonnet 5.5</span><div class="stats"><b>$0.50</b><span>7.0 min · 11 turns</span></div></div><p class="note">Six scenes, word-per-beat typography, 3D tunnel + Fibonacci sphere.</p>
-  <div class="links"><a href="runs/sonnet-5-5/test1-showreel/effect.html">Live HTML ↗</a><a href="runs/sonnet-5-5/test1-showreel/effect.mp4">MP4 ↗</a></div>
+  <div class="links"><button type="button" class="open" data-i="5">Watch</button><a href="runs/sonnet-5-5/test1-showreel/effect.html" target="_blank" rel="noopener">Live HTML ↗</a></div>
 </article></div>
 </section><section class="test">
   <header><p class="eyebrow">Test 2</p><h2>Explainer film</h2></header>
   <details><summary>The prompt</summary><pre>Why do we dream? Answer it as a short motion graphics film.</pre></details>
   <div class="grid"><article class="run">
-  <a class="media" href="runs/opus-5-5/test2-explainer/effect.html" aria-label="Open live Opus 5.5 version"><video src="runs/opus-5-5/test2-explainer/effect.mp4" poster="runs/opus-5-5/test2-explainer/poster.png" muted loop playsinline preload="none"></video></a>
+  <button class="media" type="button" data-i="6" aria-label="Play Explainer film (Opus 5.5)">
+    <img src="runs/opus-5-5/test2-explainer/thumb.webp" alt="" width="800" height="450" decoding="async" loading="lazy"><span class="play" aria-hidden="true">▶</span>
+  </button>
   <div class="meta"><span class="chip opus-5-5">Opus 5.5</span><div class="stats"><b>$2.51</b><span>31.8 min · 26 turns</span></div></div><p class="note">44.5s night-sky film, four cited theories, closes on “No one knows for sure — yet.”</p>
-  <div class="links"><a href="runs/opus-5-5/test2-explainer/effect.html">Live HTML ↗</a><a href="runs/opus-5-5/test2-explainer/effect.mp4">MP4 ↗</a></div>
+  <div class="links"><button type="button" class="open" data-i="6">Watch</button><a href="runs/opus-5-5/test2-explainer/effect.html" target="_blank" rel="noopener">Live HTML ↗</a></div>
 </article>
 <article class="run">
-  <a class="media" href="runs/sonnet-5-5/test2-explainer/effect.html" aria-label="Open live Sonnet 5.5 version"><video src="runs/sonnet-5-5/test2-explainer/effect.mp4" poster="runs/sonnet-5-5/test2-explainer/poster.png" muted loop playsinline preload="none"></video></a>
+  <button class="media" type="button" data-i="7" aria-label="Play Explainer film (Sonnet 5.5)">
+    <img src="runs/sonnet-5-5/test2-explainer/thumb.webp" alt="" width="800" height="450" decoding="async" loading="lazy"><span class="play" aria-hidden="true">▶</span>
+  </button>
   <div class="meta"><span class="chip sonnet-5-5">Sonnet 5.5</span><div class="stats"><b>$0.74</b><span>8.2 min · 14 turns</span></div></div><p class="note">42s film, text/illustration split, same four theories, hedged.</p>
-  <div class="links"><a href="runs/sonnet-5-5/test2-explainer/effect.html">Live HTML ↗</a><a href="runs/sonnet-5-5/test2-explainer/effect.mp4">MP4 ↗</a></div>
+  <div class="links"><button type="button" class="open" data-i="7">Watch</button><a href="runs/sonnet-5-5/test2-explainer/effect.html" target="_blank" rel="noopener">Live HTML ↗</a></div>
 </article></div>
 </section><section class="test">
   <header><p class="eyebrow">Test 3</p><h2>Chart animation</h2></header>
   <details><summary>The prompt</summary><pre>Build effect.html from scratch: a bar chart titled Weekly reach with these values: Mon: 1,200, Tue: 1,800, Wed: 1,500, Thu: 2,400, Fri: 2,100, Sat: 3,200. The bars slim down and turn into a line through their own tops, and the last value gets a tag. Never change a value. One 8-second loop with window.seek(seconds), ending where it starts. Size: 1920 x 1080. Label sample numbers as examples.</pre></details>
   <div class="grid"><article class="run">
-  <a class="media" href="runs/opus-5-5/test3-chart/effect.html" aria-label="Open live Opus 5.5 version"><video src="runs/opus-5-5/test3-chart/effect.mp4" poster="runs/opus-5-5/test3-chart/poster.png" muted loop playsinline preload="none"></video></a>
+  <button class="media" type="button" data-i="8" aria-label="Play Chart animation (Opus 5.5)">
+    <img src="runs/opus-5-5/test3-chart/thumb.webp" alt="" width="800" height="450" decoding="async" loading="lazy"><span class="play" aria-hidden="true">▶</span>
+  </button>
   <div class="meta"><span class="chip opus-5-5">Opus 5.5</span><div class="stats"><b>$1.12</b><span>6.9 min · 21 turns</span></div></div><p class="note">Monotone curve through the bar tops, amber “SAT · LATEST” tag; loop is byte-identical.</p>
-  <div class="links"><a href="runs/opus-5-5/test3-chart/effect.html">Live HTML ↗</a><a href="runs/opus-5-5/test3-chart/effect.mp4">MP4 ↗</a></div>
+  <div class="links"><button type="button" class="open" data-i="8">Watch</button><a href="runs/opus-5-5/test3-chart/effect.html" target="_blank" rel="noopener">Live HTML ↗</a></div>
 </article>
 <article class="run">
-  <a class="media" href="runs/sonnet-5-5/test3-chart/effect.html" aria-label="Open live Sonnet 5.5 version"><video src="runs/sonnet-5-5/test3-chart/effect.mp4" poster="runs/sonnet-5-5/test3-chart/poster.png" muted loop playsinline preload="none"></video></a>
+  <button class="media" type="button" data-i="9" aria-label="Play Chart animation (Sonnet 5.5)">
+    <img src="runs/sonnet-5-5/test3-chart/thumb.webp" alt="" width="800" height="450" decoding="async" loading="lazy"><span class="play" aria-hidden="true">▶</span>
+  </button>
   <div class="meta"><span class="chip sonnet-5-5">Sonnet 5.5</span><div class="stats"><b>$0.58</b><span>4.6 min · 17 turns</span></div></div><p class="note">Straight-segment line, mint Sat highlight, Bars/Line toggle.</p>
-  <div class="links"><a href="runs/sonnet-5-5/test3-chart/effect.html">Live HTML ↗</a><a href="runs/sonnet-5-5/test3-chart/effect.mp4">MP4 ↗</a></div>
+  <div class="links"><button type="button" class="open" data-i="9">Watch</button><a href="runs/sonnet-5-5/test3-chart/effect.html" target="_blank" rel="noopener">Live HTML ↗</a></div>
 </article></div>
 </section><section class="test">
   <header><p class="eyebrow">Test 4</p><h2>App animation</h2></header>
   <details><summary>The prompt</summary><pre>Build effect.html from scratch: a small card titled Q4 launch plan grows from its own corner into a full editor window called Campaign HQ, with a sidebar, a document and status chips. The card&#x27;s title travels into the window&#x27;s title bar. One 8-second loop with window.seek(seconds), ending where it starts. Size: 1920 x 1080. Embed the fonts.</pre></details>
   <div class="grid"><article class="run">
-  <a class="media" href="runs/opus-5-5/test4-app/effect.html" aria-label="Open live Opus 5.5 version"><video src="runs/opus-5-5/test4-app/effect.mp4" poster="runs/opus-5-5/test4-app/poster.png" muted loop playsinline preload="none"></video></a>
+  <button class="media" type="button" data-i="10" aria-label="Play App animation (Opus 5.5)">
+    <img src="runs/opus-5-5/test4-app/thumb.webp" alt="" width="800" height="450" decoding="async" loading="lazy"><span class="play" aria-hidden="true">▶</span>
+  </button>
   <div class="meta"><span class="chip opus-5-5">Opus 5.5</span><div class="stats"><b>$1.52</b><span>8.2 min · 23 turns</span></div></div><p class="note">Light board → Campaign HQ; cursor-driven, title arcs into breadcrumb.</p>
-  <div class="links"><a href="runs/opus-5-5/test4-app/effect.html">Live HTML ↗</a><a href="runs/opus-5-5/test4-app/effect.mp4">MP4 ↗</a></div>
+  <div class="links"><button type="button" class="open" data-i="10">Watch</button><a href="runs/opus-5-5/test4-app/effect.html" target="_blank" rel="noopener">Live HTML ↗</a></div>
 </article>
 <article class="run">
-  <a class="media" href="runs/sonnet-5-5/test4-app/effect.html" aria-label="Open live Sonnet 5.5 version"><video src="runs/sonnet-5-5/test4-app/effect.mp4" poster="runs/sonnet-5-5/test4-app/poster.png" muted loop playsinline preload="none"></video></a>
+  <button class="media" type="button" data-i="11" aria-label="Play App animation (Sonnet 5.5)">
+    <img src="runs/sonnet-5-5/test4-app/thumb.webp" alt="" width="800" height="450" decoding="async" loading="lazy"><span class="play" aria-hidden="true">▶</span>
+  </button>
   <div class="meta"><span class="chip sonnet-5-5">Sonnet 5.5</span><div class="stats"><b>$0.66</b><span>6.5 min · 13 turns</span></div></div><p class="note">Dark Linear-style UI; ticks a checklist item mid-hold (62→75%).</p>
-  <div class="links"><a href="runs/sonnet-5-5/test4-app/effect.html">Live HTML ↗</a><a href="runs/sonnet-5-5/test4-app/effect.mp4">MP4 ↗</a></div>
+  <div class="links"><button type="button" class="open" data-i="11">Watch</button><a href="runs/sonnet-5-5/test4-app/effect.html" target="_blank" rel="noopener">Live HTML ↗</a></div>
 </article></div>
 </section>
 <footer>Costs are API list-price estimates computed from Claude Code transcripts by <code>tools/session_cost.py</code> (±25%: output tokens are estimated). Minutes are wall-clock and include MP4 rendering (Opus Test 2 spent ~23 of its 32 min rendering 1,335 frames). Inspired by Charlie Hills' Opus 5.5 motion graphics test.</footer>
 </main>
+<dialog id="viewer" aria-labelledby="v-title">
+  <video id="v-video" controls muted loop playsinline preload="metadata"></video>
+  <div class="vbar"><span class="chip" id="v-chip"></span><h3 id="v-title"></h3><div class="stats" id="v-stats"></div></div>
+  <div class="vbody"><p class="note" id="v-note"></p>
+    <details id="v-promptbox"><summary>The prompt</summary><pre id="v-prompt"></pre></details>
+    <div class="vlinks"><a class="primary" id="v-live" target="_blank" rel="noopener">Open live HTML ↗</a><a id="v-mp4" target="_blank" rel="noopener">MP4 ↗</a>
+      <span class="spacer"></span><button type="button" id="v-prev" aria-label="Previous">←</button><button type="button" id="v-next" aria-label="Next">→</button><button type="button" id="v-close">Close (Esc)</button></div>
+  </div>
+</dialog>
 <script>
-document.querySelectorAll('.media video').forEach(v=>{
-  const play=()=>{v.preload='auto';v.play().catch(()=>{})},stop=()=>v.pause();
-  v.parentElement.addEventListener('mouseenter',play);v.parentElement.addEventListener('mouseleave',stop);
-  new IntersectionObserver(es=>es.forEach(x=>x.isIntersecting&&matchMedia('(hover:none)').matches?play():stop()),{threshold:.6}).observe(v);
+const ITEMS=[{"rel": "studio/neural-net-showreel", "model": "opus-5-5", "label": "Opus 5.5", "title": "Neural net showreel", "cost": 2.36, "minutes": 14.9, "turns": 29, "note": "Showreel prompt + topic. Plain HTML/Canvas, no skills. Real 4\u21926\u21926\u21923 MLP trained on iris in-page; every number on screen is computed.", "prompt": ""}, {"rel": "studio/neural-net-hyperframes", "model": "opus-5-5", "label": "Opus 5.5", "title": "Neural net \u00b7 HyperFrames + skills", "cost": 3.36, "minutes": 19.0, "turns": 41, "note": "Same prompt, built with the HyperFrames skills, GSAP timeline and CLI render; passes hyperframes check (lint, layout, WCAG contrast).", "prompt": ""}, {"rel": "studio/micrograd-backprop", "model": "opus-5-5", "label": "Opus 5.5", "title": "Backpropagation, spelled out", "cost": 2.69, "minutes": 16.3, "turns": 32, "note": "96s micrograd explainer: a JS port of Value/_backward computes every value. Space / \u2190 \u2192 to present.", "prompt": ""}, {"rel": "studio/agents-workflow", "model": "opus-5-5", "label": "Opus 5.5", "title": "How I build with agents", "cost": 2.61, "minutes": 19.1, "turns": 37, "note": "78s explainer using this repo as the case study: harness loop, auto mode, subagents, eval loop, costs. Space / \u2190 \u2192 to present.", "prompt": ""}, {"rel": "runs/opus-5-5/test1-showreel", "model": "opus-5-5", "label": "Opus 5.5", "title": "Showreel", "cost": 1.57, "minutes": 14.2, "turns": 18, "note": "Seven scenes on a 120 BPM grid; particles form MOTION, ends MOTION \u2192 EMOTION \u2192 dot.", "prompt": "Make a dynamic 15-second motion graphics video that shows what an incredible motion designer you are. Go all out."}, {"rel": "runs/sonnet-5-5/test1-showreel", "model": "sonnet-5-5", "label": "Sonnet 5.5", "title": "Showreel", "cost": 0.5, "minutes": 7.0, "turns": 11, "note": "Six scenes, word-per-beat typography, 3D tunnel + Fibonacci sphere.", "prompt": "Make a dynamic 15-second motion graphics video that shows what an incredible motion designer you are. Go all out."}, {"rel": "runs/opus-5-5/test2-explainer", "model": "opus-5-5", "label": "Opus 5.5", "title": "Explainer film", "cost": 2.51, "minutes": 31.8, "turns": 26, "note": "44.5s night-sky film, four cited theories, closes on \u201cNo one knows for sure \u2014 yet.\u201d", "prompt": "Why do we dream? Answer it as a short motion graphics film."}, {"rel": "runs/sonnet-5-5/test2-explainer", "model": "sonnet-5-5", "label": "Sonnet 5.5", "title": "Explainer film", "cost": 0.74, "minutes": 8.2, "turns": 14, "note": "42s film, text/illustration split, same four theories, hedged.", "prompt": "Why do we dream? Answer it as a short motion graphics film."}, {"rel": "runs/opus-5-5/test3-chart", "model": "opus-5-5", "label": "Opus 5.5", "title": "Chart animation", "cost": 1.12, "minutes": 6.9, "turns": 21, "note": "Monotone curve through the bar tops, amber \u201cSAT \u00b7 LATEST\u201d tag; loop is byte-identical.", "prompt": "Build effect.html from scratch: a bar chart titled Weekly reach with these values: Mon: 1,200, Tue: 1,800, Wed: 1,500, Thu: 2,400, Fri: 2,100, Sat: 3,200. The bars slim down and turn into a line through their own tops, and the last value gets a tag. Never change a value. One 8-second loop with window.seek(seconds), ending where it starts. Size: 1920 x 1080. Label sample numbers as examples."}, {"rel": "runs/sonnet-5-5/test3-chart", "model": "sonnet-5-5", "label": "Sonnet 5.5", "title": "Chart animation", "cost": 0.58, "minutes": 4.6, "turns": 17, "note": "Straight-segment line, mint Sat highlight, Bars/Line toggle.", "prompt": "Build effect.html from scratch: a bar chart titled Weekly reach with these values: Mon: 1,200, Tue: 1,800, Wed: 1,500, Thu: 2,400, Fri: 2,100, Sat: 3,200. The bars slim down and turn into a line through their own tops, and the last value gets a tag. Never change a value. One 8-second loop with window.seek(seconds), ending where it starts. Size: 1920 x 1080. Label sample numbers as examples."}, {"rel": "runs/opus-5-5/test4-app", "model": "opus-5-5", "label": "Opus 5.5", "title": "App animation", "cost": 1.52, "minutes": 8.2, "turns": 23, "note": "Light board \u2192 Campaign HQ; cursor-driven, title arcs into breadcrumb.", "prompt": "Build effect.html from scratch: a small card titled Q4 launch plan grows from its own corner into a full editor window called Campaign HQ, with a sidebar, a document and status chips. The card's title travels into the window's title bar. One 8-second loop with window.seek(seconds), ending where it starts. Size: 1920 x 1080. Embed the fonts."}, {"rel": "runs/sonnet-5-5/test4-app", "model": "sonnet-5-5", "label": "Sonnet 5.5", "title": "App animation", "cost": 0.66, "minutes": 6.5, "turns": 13, "note": "Dark Linear-style UI; ticks a checklist item mid-hold (62\u219275%).", "prompt": "Build effect.html from scratch: a small card titled Q4 launch plan grows from its own corner into a full editor window called Campaign HQ, with a sidebar, a document and status chips. The card's title travels into the window's title bar. One 8-second loop with window.seek(seconds), ending where it starts. Size: 1920 x 1080. Embed the fonts."}];
+const dlg=document.getElementById('viewer'),vid=document.getElementById('v-video'),$=id=>document.getElementById(id);
+let cur=-1;
+function show(i){
+  cur=(i+ITEMS.length)%ITEMS.length;const it=ITEMS[cur];
+  vid.poster=it.rel+'/thumb.webp';vid.src=it.rel+'/effect.mp4';vid.play().catch(()=>{});
+  $('v-chip').className='chip '+it.model;$('v-chip').textContent=it.label;$('v-title').textContent=it.title;
+  $('v-stats').innerHTML=it.cost!=null?`<b>$${it.cost.toFixed(2)}</b><span>${it.minutes.toFixed(1)} min · ${it.turns} turns</span>`:'';
+  $('v-note').textContent=it.note||'';$('v-prompt').textContent=it.prompt||'';$('v-promptbox').hidden=!it.prompt;
+  $('v-live').href=it.rel+'/effect.html';$('v-mp4').href=it.rel+'/effect.mp4';
+  if(!dlg.open){dlg.showModal();$('v-close').focus();}
+}
+dlg.addEventListener('close',()=>{vid.pause();vid.removeAttribute('src');vid.load();});
+dlg.addEventListener('click',ev=>{if(ev.target===dlg)dlg.close();});
+dlg.addEventListener('keydown',ev=>{if(ev.key==='ArrowRight'){ev.preventDefault();show(cur+1);}if(ev.key==='ArrowLeft'){ev.preventDefault();show(cur-1);}});
+$('v-prev').onclick=()=>show(cur-1);$('v-next').onclick=()=>show(cur+1);$('v-close').onclick=()=>dlg.close();
+document.querySelectorAll('[data-i]').forEach(b=>b.addEventListener('click',()=>show(+b.dataset.i)));
+// Hover preview: create a small looping clip only on devices that can hover.
+if(matchMedia('(hover:hover)').matches)document.querySelectorAll('.media').forEach(m=>{
+  let v=null;
+  m.addEventListener('pointerenter',()=>{
+    if(!v){v=document.createElement('video');Object.assign(v,{muted:true,loop:true,playsInline:true,preload:'auto'});
+      v.src=ITEMS[+m.dataset.i].rel+'/preview.mp4';v.addEventListener('playing',()=>m.classList.add('on'));m.appendChild(v);}
+    v.play().catch(()=>{});
+  });
+  m.addEventListener('pointerleave',()=>{if(v){v.pause();m.classList.remove('on');}});
 });
 </script></body></html>
